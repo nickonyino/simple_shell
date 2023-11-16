@@ -84,7 +84,7 @@ int _myhistory(info_t *info)
 
 * 
 
-* Return: 0 if condition success, 1 if error 
+* Return: 0 true, 1 if false
 
 */ 
 

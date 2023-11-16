@@ -58,7 +58,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 
 		x++; 
 
-		info->cmd_buf_type = CMD_OR; 
+		info -> cmd_buf_type = CMD_OR; 
 
 	} 
 
@@ -70,7 +70,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 
 		x++; 
 
-		info->cmd_buf_type = CMD_AND; 
+		info -> cmd_buf_type = CMD_AND; 
 
 	} 
 
@@ -80,7 +80,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 
 		buf[x] = 0; 
 
-		info->cmd_buf_type = CMD_CHAIN; 
+		info -> cmd_buf_type = CMD_CHAIN; 
 
 	} 
 
@@ -262,7 +262,7 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 
   
 
-	if (info->cmd_buf_type == CMD_AND) 
+	if (info -> cmd_buf_type == CMD_AND) 
 
 	{ 
 
@@ -278,7 +278,7 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 
 	} 
 
-	if (info->cmd_buf_type == CMD_OR) 
+	if (info -> cmd_buf_type == CMD_OR) 
 
 	{ 
 
