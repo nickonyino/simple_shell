@@ -2,23 +2,9 @@
 
 #define NICKDUN_H 
 
- #include <string.h> 
+#include <string.h> 
 
 #include <sys/types.h> 
-
- 
-
-size_t list_len(const list_t *); 
-
-char **list_to_strings(list_t *); 
-
-size_t print_list(const list_t *); 
-
-list_t *node_starts_with(list_t *, char *, char); 
-
-ssize_t get_node_index(list_t *, list_t *); 
-
- 
 
 #include <errno.h> 
 
@@ -28,33 +14,20 @@ ssize_t get_node_index(list_t *, list_t *);
 
 #include <stdio.h> 
 
-#include <stdlib.h> 
+#include <stdlib.h>
 
- 
+#include <fcntl.h>
 
-int is_cmd(info_t *, char *); 
+#include <limits.h>
 
-char *dup_chars(char *, int, int); 
+#include <unistd.h>
 
-char *find_path(info_t *, char *, char *); 
-
- 
 
 #define READ_BUF_SIZE 1024 
 
 #define WRITE_BUF_SIZE 1024 
 
 #define BUF_FLUSH -1 
-
- 
-
-#include <unistd.h> 
-
-#include <limits.h> 
-
-#include <fcntl.h> 
-
- 
 
 #define CMD_NORM	0 
 
@@ -82,12 +55,25 @@ char *find_path(info_t *, char *, char *);
 
 #define HIST_MAX	4096 
 
-  
+
+size_t list_len(const list_t *);
+
+char **list_to_strings(list_t *);
+
+size_t print_list(const list_t *);
+
+list_t *node_starts_with(list_t *, char *, char);
+
+ssize_t get_node_index(list_t *, list_t *);
+
+int is_cmd(info_t *, char *);
+
+char *dup_chars(char *, int, int);
+
+char *find_path(info_t *, char *, char *);
+
 
 extern char **environ; 
-
-  
-
   
 
 /** 
