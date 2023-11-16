@@ -1,15 +1,10 @@
-#include "Nickdun.h" 
+#include "nickdun.h" 
 
 /** 
 
 * _strcat - joins two str 
-
 * @dest: end buffer str 
-
 * @src: original buffer 
-
-* 
-
 * Return: the Ptr if success 
 
 */ 

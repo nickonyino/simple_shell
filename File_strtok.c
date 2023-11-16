@@ -1,4 +1,4 @@
-#include "Nickdun.h" 
+#include "nickdun.h" 
 
 /** 
 
@@ -124,7 +124,7 @@ char **strtow(char *str, char *d)
 
 		d = " "; 
 
-	for (w = 0; str[y] != '\0'; y++) 
+	for (y = 0; str[y] != '\0'; y++) 
 
 		if (!is_delim(str[y], d) && (is_delim(str[y + 1], d) || !str[y + 1])) 
 
