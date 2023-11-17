@@ -1,275 +1,275 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
- /** 
+/**
 
-* print_error - printing fail messg 
+ * print_error - printing fail messg
 
-* @info: args & output data structure 
+ * @info: args & output data structure
 
-* @estr: str holds specific error types 
+ * @estr: str holds specific error types
 
-* Return: 0 if condition success, -1 if error 
+ * Return: 0 if condition success, -1 if error
 
-*/ 
+ */
 
-void print_error(info_t *info, char *estr) 
+void print_error(info_t *info, char *estr)
 
-{ 
+{
 
-	_eputs(info->fname); 
+	_eputs(info->fname);
 
-	_eputs(": "); 
+	_eputs(": ");
 
-	print_d(info->line_count, STDERR_FILENO); 
+	print_d(info->line_count, STDERR_FILENO);
 
-	_eputs(": "); 
+	_eputs(": ");
 
-	_eputs(info->argv[0]); 
+	_eputs(info->argv[0]);
 
-	_eputs(": "); 
+	_eputs(": ");
 
-	_eputs(estr); 
+	_eputs(estr);
 
-} 
+}
 
- 
 
-/** 
 
-* _erratoi – turns str to integer 
+/**
 
-* @s: str to turn. 
+ * _erratoi – turns str to integer
 
-* Return: 0 if condition success, -1 if error 
+ * @s: str to turn.
 
-*/ 
+ * Return: 0 if condition success, -1 if error
 
-int _erratoi(char *s) 
+ */
 
-{ 
+int _erratoi(char *s)
 
-	int i = 0; 
+{
 
-	unsigned long int result = 0; 
+	int i = 0;
 
-  
+	unsigned long int result = 0;
 
-	if (*s == '+') 
 
-		s++;  /* TODO: reason why main return 255? */ 
 
-	for (i = 0;  s[i] != '\0'; i++) 
+	if (*s == '+')
 
-	{ 
+		s++;  /* TODO: reason why main return 255? */
 
-		if (s[i] >= '0' && s[i] <= '9') 
+	for (i = 0;  s[i] != '\0'; i++)
 
-		{ 
+	{
 
-			result *= 10; 
+		if (s[i] >= '0' && s[i] <= '9')
 
-			result += (s[i] - '0'); 
+		{
 
-			if (result > INT_MAX) 
+			result *= 10;
 
-				return (-1); 
+			result += (s[i] - '0');
 
-		} 
+			if (result > INT_MAX)
 
-		else 
+				return (-1);
 
-			return (-1); 
+		}
 
-	} 
+		else
 
-	return (result); 
+			return (-1);
 
-} 
+	}
 
-  
+	return (result);
 
-  
+}
 
-/** 
 
-* print_d – the funct for printing  dec (int) number (to base 10) 
 
-* @input: data input  
 
-* @fd: the fd to print on 
 
-* 
+/**
 
-* Return: the range of printed character 
+ * print_d – the funct for printing  dec (int) number (to base 10)
 
-*/ 
+ * @input: data input
 
-int print_d(int input, int fd) 
+ * @fd: the fd to print on
 
-{ 
+ *
 
-	int (*__putchar)(char) = _putchar; 
+ * Return: the range of printed character
 
-	int i, counter = 0; 
+ */
 
-	unsigned int _abs_, current; 
+int print_d(int input, int fd)
 
-  
+{
 
-	if (fd == STDERR_FILENO) 
+	int (*__putchar)(char) = _putchar;
 
-		__putchar = _eputchar; 
+	int i, counter = 0;
 
-	if (input < 0) 
+	unsigned int _abs_, current;
 
-	{ 
 
-		_abs_ = -input; 
 
-		__putchar('-'); 
+	if (fd == STDERR_FILENO)
 
-		counter++; 
+		__putchar = _eputchar;
 
-	} 
+	if (input < 0)
 
-	else 
+	{
 
-		_abs_ = input; 
+		_abs_ = -input;
 
-	current = _abs_; 
+		__putchar('-');
 
-	for (i = 1000000000; i > 1; i /= 10) 
+		counter++;
 
-	{ 
+	}
 
-		if (_abs_ / i) 
+	else
 
-		{ 
+		_abs_ = input;
 
-			__putchar('0' + current / i); 
+	current = _abs_;
 
-			counter++; 
+	for (i = 1000000000; i > 1; i /= 10)
 
-		} 
+	{
 
-		current %= i; 
+		if (_abs_ / i)
 
-	} 
+		{
 
-	__putchar('0' + current); 
+			__putchar('0' + current / i);
 
-	counter++; 
+			counter++;
 
-  
+		}
 
-	return (counter); 
+		current %= i;
 
-} 
+	}
 
-  
+	__putchar('0' + current);
 
-/** 
+	counter++;
 
-* convert_number - change funct, clone itoa 
 
-* @num: range number 
 
-* @base: base unit 
+	return (counter);
 
-* @flags: parameter flags 
+}
 
-* 
 
-* Return: str 
 
-*/ 
+/**
 
-char *convert_number(long int num, int base, int flags) 
+ * convert_number - change funct, clone itoa
 
-{ 
+ * @num: range number
 
-	static char *array; 
+ * @base: base unit
 
-	static char buffer[50]; 
+ * @flags: parameter flags
 
-	char sign = 0; 
+ *
 
-	char *ptr; 
+ * Return: str
 
-	unsigned long y = num; 
+ */
 
-  
+char *convert_number(long int num, int base, int flags)
 
-	if (!(flags & CONVERT_UNSIGNED) && num < 0) 
+{
 
-	{ 
+	static char *array;
 
-		y = -num; 
+	static char buffer[50];
 
-		sign = '-'; 
+	char sign = 0;
 
-  
+	char *ptr;
 
-	} 
+	unsigned long y = num;
 
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF"; 
 
-	ptr = &buffer[49]; 
 
-	*ptr = '\0'; 
+	if (!(flags & CONVERT_UNSIGNED) && num < 0)
 
-  
+	{
 
-	do	{ 
+		y = -num;
 
-		*--ptr = array[y % base]; 
+		sign = '-';
 
-		y /= base; 
 
-	} while (y != 0); 
 
-  
+	}
 
-	if (sign) 
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 
-		*--ptr = sign; 
+	ptr = &buffer[49];
 
-	return (ptr); 
+	*ptr = '\0';
 
-} 
 
-  
 
-/** 
+	do	{
 
-* remove_comments – the funct changes first appearance of '#' with '\0' 
+		*--ptr = array[y % base];
 
-* @buf: str location that needs modification 
+		y /= base;
 
-* 
+	} while (y != 0);
 
-* Return:  0 if condition Success; 
 
-*/ 
 
-void remove_comments(char *buf) 
+	if (sign)
 
-{ 
+		*--ptr = sign;
 
-	int f; 
+	return (ptr);
 
-  
+}
 
-	for (f = 0; buf[f] != '\0'; f++) 
 
-		if (buf[f] == '#' && (!f || buf[f - 1] == ' ')) 
 
-		{ 
+/**
 
-			buf[f] = '\0'; 
+ * remove_comments – the funct changes first appearance of '#' with '\0'
 
-			break; 
+ * @buf: str location that needs modification
 
-		} 
+ *
 
-} 
+ * Return:  0 if condition Success;
+
+ */
+
+void remove_comments(char *buf)
+
+{
+
+	int f;
+
+
+
+	for (f = 0; buf[f] != '\0'; f++)
+
+		if (buf[f] == '#' && (!f || buf[f - 1] == ' '))
+
+		{
+
+			buf[f] = '\0';
+
+			break;
+
+		}
+
+}

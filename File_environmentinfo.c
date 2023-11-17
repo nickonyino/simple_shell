@@ -1,337 +1,337 @@
 #include "nickdun.h"
 
-/** 
+/**
 
-* _unsetenv - delete variable environment 
+ * _unsetenv - delete variable environment
 
-* @info: Struct that holds  args for maintaining 
+ * @info: Struct that holds  args for maintaining
 
-* constant funct prototype  
+ * constant funct prototype
 
-*  Return: 1 if delete success , if otherwise 0 
+ *  Return: 1 if delete success , if otherwise 0
 
-* @var: variable property str environment 
+ * @var: variable property str environment
 
-*/ 
+ */
 
-int _unsetenv(info_t *info, char *var) 
+int _unsetenv(info_t *info, char *var)
 
-{ 
+{
 
-	list_t *node = info->env; 
+	list_t *node = info->env;
 
-	size_t i = 0; 
+	size_t i = 0;
 
-	char *p; 
+	char *p;
 
-  
 
-	if (!node || !var) 
 
-		return (0); 
+	if (!node || !var)
 
-  
+		return (0);
 
-	while (node) 
 
-	{ 
 
-		p = starts_with(node->str, var); 
+	while (node)
 
-		if (p && *p == '=') 
+	{
 
-		{ 
+		p = starts_with(node->str, var);
 
-			info->env_changed = delete_node_at_index(&(info->env), i); 
+		if (p && *p == '=')
 
-			i = 0; 
+		{
 
-			node = info->env; 
+			info->env_changed = delete_node_at_index(&(info->env), i);
 
-			continue; 
+			i = 0;
 
-		} 
+			node = info->env;
 
-		node = node->next; 
+			continue;
 
-		i++; 
+		}
 
-	} 
+		node = node->next;
 
-	return (info->env_changed); 
+		i++;
 
-} 
+	}
 
- 
+	return (info->env_changed);
 
- 
+}
 
-/** 
 
-* get_environ - restore str arr copy of the environment 
 
-* @info Struct that holds  args for maintaining 
 
-* constant funct prototype  
 
-* Return:  0 if condition Success 
+/**
 
-*/ 
+ * get_environ - restore str arr copy of the environment
 
- 
+ * @info Struct that holds  args for maintaining
 
-char **get_environ(info_t *info) 
+ * constant funct prototype
 
-{ 
+ * Return:  0 if condition Success
 
-	if (!info->environ || info->env_changed) 
+ */
 
-	{ 
 
-		info->environ = list_to_strings(info->env); 
 
-		info->env_changed = 0; 
+char **get_environ(info_t *info)
 
-	} 
+{
 
-  
+	if (!info->environ || info->env_changed)
 
-	return (info->environ); 
+	{
 
-} 
+		info->environ = list_to_strings(info->env);
 
-  
+		info->env_changed = 0;
 
-  
+	}
 
-/** 
 
-* _setenv - begin new variable environment, 
 
-*             or adjust the one that exists 
+	return (info->environ);
 
-* @info: Struct that holds  args for maintaining 
+}
 
-* constant funct prototype 
 
-* @var: variable property str environment 
 
-* @value: status of variable str environment 
 
-*  Return:  0 if condition Success 
 
-*/ 
+/**
 
-int _setenv(info_t *info, char *var, char *value) 
+ * _setenv - begin new variable environment,
 
-{ 
+ *             or adjust the one that exists
 
-	char *buf = NULL; 
+ * @info: Struct that holds  args for maintaining
 
-	list_t *node; 
+ * constant funct prototype
 
-	char *p; 
+ * @var: variable property str environment
 
-  
+ * @value: status of variable str environment
 
-	if (!var || !value) 
+ *  Return:  0 if condition Success
 
-		return (0); 
+ */
 
-  
+int _setenv(info_t *info, char *var, char *value)
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2); 
+{
 
-	if (!buf) 
+	char *buf = NULL;
 
-		return (1); 
+	list_t *node;
 
-	_strcpy(buf, var); 
+	char *p;
 
-	_strcat(buf, "="); 
 
-	_strcat(buf, value); 
 
-	node = info->env; 
+	if (!var || !value)
 
-	while (node) 
+		return (0);
 
-	{ 
 
-		p = starts_with(node->str, var); 
 
-		if (p && *p == '=') 
+	buf = malloc(_strlen(var) + _strlen(value) + 2);
 
-		{ 
+	if (!buf)
 
-			free(node->str); 
+		return (1);
 
-			node->str = buf; 
+	_strcpy(buf, var);
 
-			info->env_changed = 1; 
+	_strcat(buf, "=");
 
-			return (0); 
+	_strcat(buf, value);
 
-		} 
+	node = info->env;
 
-		node = node->next; 
+	while (node)
 
-	} 
+	{
 
-	add_node_end(&(info->env), buf, 0); 
+		p = starts_with(node->str, var);
 
-	free(buf); 
+		if (p && *p == '=')
 
-	info->env_changed = 1; 
+		{
 
-	return (0); 
+			free(node->str);
 
-} 
+			node->str = buf;
 
- 
+			info->env_changed = 1;
 
-/** 
+			return (0);
 
-* set_info – begin structure info_t. 
+		}
 
-* @info: location of structure. 
+		node = node->next;
 
-* @av: the vector parameter. 
+	}
 
-*/ 
+	add_node_end(&(info->env), buf, 0);
 
-void set_info(info_t *info, char **av) 
+	free(buf);
 
-{ 
+	info->env_changed = 1;
 
-	int z = 0; 
+	return (0);
 
-  
+}
 
-	info->fname = av[0]; 
 
-	if (info->arg) 
 
-	{ 
+/**
 
-		info->argv = strtow(info->arg, " \t"); 
+ * set_info – begin structure info_t.
 
-		if (!info->argv) 
+ * @info: location of structure.
 
-		{ 
+ * @av: the vector parameter.
 
-			info->argv = malloc(sizeof(char *) * 2); 
+ */
 
-			if (info->argv) 
+void set_info(info_t *info, char **av)
 
-			{ 
+{
 
-				info->argv[0] = _strdup(info->arg); 
+	int z = 0;
 
-				info->argv[1] = NULL; 
 
-			} 
 
-		} 
+	info->fname = av[0];
 
-		for (z = 0; info->argv && info->argv[z]; z++) 
+	if (info->arg)
 
-			; 
+	{
 
-		info->argc = z; 
+		info->argv = strtow(info->arg, " \t");
 
-  
+		if (!info->argv)
 
-		replace_alias(info); 
+		{
 
-		replace_vars(info); 
+			info->argv = malloc(sizeof(char *) * 2);
 
-	} 
+			if (info->argv)
 
-} 
+			{
 
- 
+				info->argv[0] = _strdup(info->arg);
 
- 
+				info->argv[1] = NULL;
 
-/** 
+			}
 
-* clear_info - begin structure info_t. 
+		}
 
-* @info: location of structure. 
+		for (z = 0; info->argv && info->argv[z]; z++)
 
-*/ 
+			;
 
-void clear_info(info_t *info) 
+		info->argc = z;
 
-{ 
 
-	info->arg = NULL; 
 
-	info->argv = NULL; 
+		replace_alias(info);
 
-	info->path = NULL; 
+		replace_vars(info);
 
-	info->argc = 0; 
+	}
 
-} 
+}
 
-  
 
-  
 
-/** 
 
-* free_info – Release structure info_t field 
 
-* @info: location of structure. 
+/**
 
-* @all: releasing of info_t in all fileds 
+ * clear_info - begin structure info_t.
 
-*/ 
+ * @info: location of structure.
 
-void free_info(info_t *info, int all) 
+ */
 
-{ 
+void clear_info(info_t *info)
 
-	ffree(info->argv); 
+{
 
-	info->argv = NULL; 
+	info->arg = NULL;
 
-	info->path = NULL; 
+	info->argv = NULL;
 
-	if (all) 
+	info->path = NULL;
 
-	{ 
+	info->argc = 0;
 
-		if (!info->cmd_buf) 
+}
 
-			free(info->arg); 
 
-		if (info->env) 
 
-			free_list(&(info->env)); 
 
-		if (info->history) 
 
-			free_list(&(info->history)); 
+/**
 
-		if (info->alias) 
+ * free_info – Release structure info_t field
 
-			free_list(&(info->alias)); 
+ * @info: location of structure.
 
-		ffree(info->environ); 
+ * @all: releasing of info_t in all fileds
 
-			info->environ = NULL; 
+ */
 
-		bfree((void **)info->cmd_buf); 
+void free_info(info_t *info, int all)
 
-		if (info->readfd > 2) 
+{
 
-			close(info->readfd); 
+	ffree(info->argv);
 
-		_putchar(BUF_FLUSH); 
+	info->argv = NULL;
 
-	} 
+	info->path = NULL;
 
-} 
+	if (all)
+
+	{
+
+		if (!info->cmd_buf)
+
+			free(info->arg);
+
+		if (info->env)
+
+			free_list(&(info->env));
+
+		if (info->history)
+
+			free_list(&(info->history));
+
+		if (info->alias)
+
+			free_list(&(info->alias));
+
+		ffree(info->environ);
+
+		info->environ = NULL;
+
+		bfree((void **)info->cmd_buf);
+
+		if (info->readfd > 2)
+
+			close(info->readfd);
+
+		_putchar(BUF_FLUSH);
+
+	}
+
+}

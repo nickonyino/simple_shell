@@ -1,6 +1,6 @@
 #include "nickdun.h"
 /**
- * is_chain -checks and test  current character 
+ * is_chain -checks and test  current character
  * buffer if it is chain delimeter
  * @info:  Parameter or arguement Structure
  * @buf: the Character of the  Buffer

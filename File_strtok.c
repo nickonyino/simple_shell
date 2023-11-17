@@ -1,187 +1,187 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* **strtow2 - divides str to words 
+ * **strtow2 - divides str to words
 
-* @str: inputted str 
+ * @str: inputted str
 
-* @d: delim str 
+ * @d: delim str
 
-* Return: arr[] of str ptr, else NULL if fails 
+ * Return: arr[] of str ptr, else NULL if fails
 
-*/ 
+ */
 
-char **strtow2(char *str, char d) 
+char **strtow2(char *str, char d)
 
-{ 
+{
 
-	int i, e, u, m, numwords = 0; 
+	int i, e, u, m, numwords = 0;
 
-	char **s; 
+	char **s;
 
-  
 
-	if (str == NULL || str[0] == 0) 
 
-		return (NULL); 
+	if (str == NULL || str[0] == 0)
 
-	for (i = 0; str[i] != '\0'; i++) 
+		return (NULL);
 
-		if ((str[i] != d && str[i + 1] == d) || 
+	for (i = 0; str[i] != '\0'; i++)
 
-				    (str[i] != d && !str[i + 1]) || str[i + 1] == d) 
+		if ((str[i] != d && str[i + 1] == d) ||
 
-			numwords++; 
+				(str[i] != d && !str[i + 1]) || str[i + 1] == d)
 
-	if (numwords == 0) 
+			numwords++;
 
-		return (NULL); 
+	if (numwords == 0)
 
-	s = malloc((1 + numwords) * sizeof(char *)); 
+		return (NULL);
 
-	if (!s) 
+	s = malloc((1 + numwords) * sizeof(char *));
 
-		return (NULL); 
+	if (!s)
 
-	for (i = 0, e = 0; e < numwords; e++) 
+		return (NULL);
 
-	{ 
+	for (i = 0, e = 0; e < numwords; e++)
 
-		while (str[i] == d && str[i] != d) 
+	{
 
-			i++; 
+		while (str[i] == d && str[i] != d)
 
-		u = 0; 
+			i++;
 
-		while (str[i + u] != d && str[i + u] && str[i + u] != d) 
+		u = 0;
 
-			u++; 
+		while (str[i + u] != d && str[i + u] && str[i + u] != d)
 
-		s[e] = malloc((u + 1) * sizeof(char)); 
+			u++;
 
-		if (!s[e]) 
+		s[e] = malloc((u + 1) * sizeof(char));
 
-		{ 
+		if (!s[e])
 
-			for (u = 0; u < e; u++) 
+		{
 
-				free(s[u]); 
+			for (u = 0; u < e; u++)
 
-			free(s); 
+				free(s[u]);
 
-			return (NULL); 
+			free(s);
 
-		} 
+			return (NULL);
 
-		for (m = 0; m < u; m++) 
+		}
 
-			s[e][m] = str[i++]; 
+		for (m = 0; m < u; m++)
 
-		s[e][m] = 0; 
+			s[e][m] = str[i++];
 
-	} 
+		s[e][m] = 0;
 
-	s[e] = NULL; 
+	}
 
-	return (s); 
+	s[e] = NULL;
 
-} 
+	return (s);
 
- 
+}
 
-/** 
 
-* **strtow - divides str into words 
 
-* @str:  inputted str 
+/**
 
-* @d: delim str 
+ * **strtow - divides str into words
 
-* Return: arr of str ptr if condition success, 
+ * @str:  inputted str
 
-* NULL if  fail 
+ * @d: delim str
 
-*/ 
+ * Return: arr of str ptr if condition success,
 
-  
+ * NULL if  fail
 
-char **strtow(char *str, char *d) 
+ */
 
-{ 
 
-	int y, x, u, n, numwords = 0; 
 
-	char **s; 
+char **strtow(char *str, char *d)
 
-  
+{
 
-	if (str == NULL || str[0] == 0) 
+	int y, x, u, n, numwords = 0;
 
-		return (NULL); 
+	char **s;
 
-	if (!d) 
 
-		d = " "; 
 
-	for (y = 0; str[y] != '\0'; y++) 
+	if (str == NULL || str[0] == 0)
 
-		if (!is_delim(str[y], d) && (is_delim(str[y + 1], d) || !str[y + 1])) 
+		return (NULL);
 
-			numwords++; 
+	if (!d)
 
-  
+		d = " ";
 
-	if (numwords == 0) 
+	for (y = 0; str[y] != '\0'; y++)
 
-		return (NULL); 
+		if (!is_delim(str[y], d) && (is_delim(str[y + 1], d) || !str[y + 1]))
 
-	s = malloc((1 + numwords) * sizeof(char *)); 
+			numwords++;
 
-	if (!s) 
 
-		return (NULL); 
 
-	for (y = 0, x = 0; x < numwords; x++) 
+	if (numwords == 0)
 
-	{ 
+		return (NULL);
 
-		while (is_delim(str[y], d)) 
+	s = malloc((1 + numwords) * sizeof(char *));
 
-			y++; 
+	if (!s)
 
-		u = 0; 
+		return (NULL);
 
-		while (!is_delim(str[y + u], d) && str[y + u]) 
+	for (y = 0, x = 0; x < numwords; x++)
 
-			u++; 
+	{
 
-		s[x] = malloc((u + 1) * sizeof(char)); 
+		while (is_delim(str[y], d))
 
-		if (!s[x]) 
+			y++;
 
-		{ 
+		u = 0;
 
-			for (u = 0; u < x; u++) 
+		while (!is_delim(str[y + u], d) && str[y + u])
 
-				free(s[u]); 
+			u++;
 
-			free(s); 
+		s[x] = malloc((u + 1) * sizeof(char));
 
-			return (NULL); 
+		if (!s[x])
 
-		} 
+		{
 
-		for (n = 0; n < u; n++) 
+			for (u = 0; u < x; u++)
 
-			s[x][n] = str[y++]; 
+				free(s[u]);
 
-		s[x][n] = 0; 
+			free(s);
 
-	} 
+			return (NULL);
 
-	s[x] = NULL; 
+		}
 
-	return (s); 
+		for (n = 0; n < u; n++)
 
-} 
+			s[x][n] = str[y++];
+
+		s[x][n] = 0;
+
+	}
+
+	s[x] = NULL;
+
+	return (s);
+
+}

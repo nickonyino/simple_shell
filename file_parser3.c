@@ -1,169 +1,169 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* find_path – get cmd in str direction 
+ * find_path – get cmd in str direction
 
-* @info: data Structure 
+ * @info: data Structure
 
-* @pathstr: Str direction 
+ * @pathstr: Str direction
 
-* @cmd: command to get 
+ * @cmd: command to get
 
-* 
+ *
 
-* Return: if cmd direction found success else NULL 
+ * Return: if cmd direction found success else NULL
 
-*/ 
+ */
 
-char *find_path(info_t *info, char *pathstr, char *cmd) 
+char *find_path(info_t *info, char *pathstr, char *cmd)
 
-{ 
+{
 
-	int y= 0, curr_pos = 0; 
+	int y= 0, curr_pos = 0;
 
-	char *path; 
+	char *path;
 
-  
 
-	if (!pathstr) 
 
-		return (NULL); 
+	if (!pathstr)
 
-	if ((_strlen(cmd) > 2) && starts_with(cmd, "./")) 
+		return (NULL);
 
-	{ 
+	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
 
-		if (is_cmd(info, cmd)) 
+	{
 
-			return (cmd); 
+		if (is_cmd(info, cmd))
 
-	} 
+			return (cmd);
 
-	while (1) 
+	}
 
-	{ 
+	while (1)
 
-		if (!pathstr[y] || pathstr[y] == ':') 
+	{
 
-		{ 
+		if (!pathstr[y] || pathstr[y] == ':')
 
-			path = dup_chars(pathstr, curr_pos, y); 
+		{
 
-			if (!*path) 
+			path = dup_chars(pathstr, curr_pos, y);
 
-				_strcat(path, cmd); 
+			if (!*path)
 
-			else 
+				_strcat(path, cmd);
 
-			{ 
+			else
 
-				_strcat(path, "/"); 
+			{
 
-				_strcat(path, cmd); 
+				_strcat(path, "/");
 
-			} 
+				_strcat(path, cmd);
 
-			if (is_cmd(info, path)) 
+			}
 
-				return (path); 
+			if (is_cmd(info, path))
 
-			if (!pathstr[y]) 
+				return (path);
 
-				break; 
+			if (!pathstr[y])
 
-			curr_pos = y; 
+				break;
 
-		} 
+			curr_pos = y;
 
-		y++; 
+		}
 
-	} 
+		y++;
 
-	return (NULL); 
+	}
 
-} 
+	return (NULL);
 
- 
+}
 
-/** 
 
-* is_cmd – ascertains file is exe cmd 
 
-* @info: data Structure 
+/**
 
-* @path: direction file 
+ * is_cmd – ascertains file is exe cmd
 
-* 
+ * @info: data Structure
 
-* Return: 1 if condition success, 0 if else 
+ * @path: direction file
 
-*/ 
+ *
 
-int is_cmd(info_t *info, char *path) 
+ * Return: 1 if condition success, 0 if else
 
-{ 
+ */
 
-	struct stat st; 
+int is_cmd(info_t *info, char *path)
 
-  
+{
 
-	(void)info; 
+	struct stat st;
 
-	if (!path || stat(path, &st)) 
 
-		return (0); 
 
-  
+	(void)info;
 
-	if (st.st_mode & S_IFREG) 
+	if (!path || stat(path, &st))
 
-	{ 
+		return (0);
 
-		return (1); 
 
-	} 
 
-	return (0); 
+	if (st.st_mode & S_IFREG)
 
-} 
+	{
 
-  
+		return (1);
 
-/** 
+	}
 
-* dup_chars – replication char 
+	return (0);
 
-* @pathstr: direction path 
+}
 
-* @start: begins the Index 
 
-* @stop: halt the index 
 
-* 
+/**
 
-* Return: the Buf to the new pointer address  
+ * dup_chars – replication char
 
-*/ 
+ * @pathstr: direction path
 
-char *dup_chars(char *pathstr, int start, int stop) 
+ * @start: begins the Index
 
-{ 
+ * @stop: halt the index
 
-	static char buf[1024]; 
+ *
 
-	int y= 0, u = 0; 
+ * Return: the Buf to the new pointer address
 
-  
+ */
 
-	for (u = 0, y = start; y< stop; y++) 
+char *dup_chars(char *pathstr, int start, int stop)
 
-		if (pathstr[y] != ':') 
+{
 
-			buf[u++] = pathstr[y]; 
+	static char buf[1024];
 
-	buf[u] = 0; 
+	int y= 0, u = 0;
 
-	return (buf); 
 
-} 
+
+	for (u = 0, y = start; y< stop; y++)
+
+		if (pathstr[y] != ':')
+
+			buf[u++] = pathstr[y];
+
+	buf[u] = 0;
+
+	return (buf);
+
+}

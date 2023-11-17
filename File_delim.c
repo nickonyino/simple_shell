@@ -1,145 +1,145 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* _atoi – changes str to integer 
+ * _atoi – changes str to integer
 
-* @x: the str to change 
+ * @x: the str to change
 
-* Return: if condition no numb in str 0, else change num 
+ * Return: if condition no numb in str 0, else change num
 
-*/ 
+ */
 
-  
 
-int _atoi(char *x) 
 
-{ 
+int _atoi(char *x)
 
-	int y, sign = 1, flag = 0, output; 
+{
 
-	unsigned int result = 0; 
+	int y, sign = 1, flag = 0, output;
 
-  
+	unsigned int result = 0;
 
-	for (y = 0; x[y] != '\0' && flag != 2; y++) 
 
-	{ 
 
-		if (x[y] == '-') 
+	for (y = 0; x[y] != '\0' && flag != 2; y++)
 
-			sign *= -1; 
+	{
 
-  
+		if (x[y] == '-')
 
-		if (x[y] >= '0' && x[y] <= '9') 
+			sign *= -1;
 
-		{ 
 
-			flag = 1; 
 
-			result *= 10; 
+		if (x[y] >= '0' && x[y] <= '9')
 
-			result += (x[y] - '0'); 
+		{
 
-		} 
+			flag = 1;
 
-		else if (flag == 1) 
+			result *= 10;
 
-			flag = 2; 
+			result += (x[y] - '0');
 
-	} 
+		}
 
-  
+		else if (flag == 1)
 
-	if (sign == -1) 
+			flag = 2;
 
-		output = -result; 
+	}
 
-	else 
 
-		output = result; 
 
-  
+	if (sign == -1)
 
-	return (output); 
+		output = -result;
 
-} 
+	else
 
- 
+		output = result;
 
-/** 
 
-* interactive – restore current shell in inter mod 
 
-* @info: location strucure 
+	return (output);
 
-* 
+}
 
-* Return: if condition success 1 ,  0  if otherwise 
 
-*/ 
 
-int interactive(info_t *info) 
+/**
 
-{ 
+ * interactive – restore current shell in inter mod
 
-	return (isatty(STDIN_FILENO) && info->readfd <= 2); 
+ * @info: location strucure
 
-} 
+ *
 
-  
+ * Return: if condition success 1 ,  0  if otherwise
 
-/** 
+ */
 
-* is_delim – look for delimeter characters 
+int interactive(info_t *info)
 
-* @c: to look for  character 
+{
 
-* @delim: string delim 
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 
-* Return: if condition true 1,  0 if condition is false 
+}
 
-*/ 
 
-int is_delim(char c, char *delim) 
 
-{ 
+/**
 
-	while (*delim) 
+ * is_delim – look for delimeter characters
 
-		if (*delim++ == c) 
+ * @c: to look for  character
 
-			return (1); 
+ * @delim: string delim
 
-	return (0); 
+ * Return: if condition true 1,  0 if condition is false
 
-} 
+ */
 
-  
+int is_delim(char c, char *delim)
 
-/** 
+{
 
-* _isalpha – look  char which are aphabetic 
+	while (*delim)
 
-* @c: inserted  char 
+		if (*delim++ == c)
 
-* Return: if output alphabetic 1, 0 if not 
+			return (1);
 
-*/ 
+	return (0);
 
-  
+}
 
-int _isalpha(int c) 
 
-{ 
 
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) 
+/**
 
-		return (1); 
+ * _isalpha – look  char which are aphabetic
 
-	else 
+ * @c: inserted  char
 
-		return (0); 
+ * Return: if output alphabetic 1, 0 if not
 
-} 
+ */
+
+
+
+int _isalpha(int c)
+
+{
+
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+
+		return (1);
+
+	else
+
+		return (0);
+
+}

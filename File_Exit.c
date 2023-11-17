@@ -1,149 +1,149 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-**_strncat – Responsible for concatenation of two str 
+ **_strncat – Responsible for concatenation of two str
 
-*@dest: beginning str 
+ *@dest: beginning str
 
-*@src: followed by second str 
+ *@src: followed by second str
 
-*@n: total range of bytes to completely utilize 
+ *@n: total range of bytes to completely utilize
 
-*Return: joined str 
+ *Return: joined str
 
-*/ 
+ */
 
-char *_strncat(char *dest, char *src, int n) 
+char *_strncat(char *dest, char *src, int n)
 
-{ 
+{
 
-	int f, e; 
+	int f, e;
 
-	char *s = dest; 
+	char *s = dest;
 
-  
 
-	f= 0; 
 
-	e= 0; 
+	f= 0;
 
-	while (dest[f] != '\0') 
+	e= 0;
 
-		f++; 
+	while (dest[f] != '\0')
 
-	while (src[e] != '\0' && e < n) 
+		f++;
 
-	{ 
+	while (src[e] != '\0' && e < n)
 
-		dest[f] = src[e]; 
+	{
 
-		f++; 
+		dest[f] = src[e];
 
-		e++; 
+		f++;
 
-	} 
+		e++;
 
-	if (e < n) 
+	}
 
-		dest[f] = '\0'; 
+	if (e < n)
 
-	return (s); 
+		dest[f] = '\0';
 
-} 
+	return (s);
 
- 
+}
 
- 
 
-/** 
 
-**_strncpy – Responsible for copying str file 
 
-*@dest: final destination str to be copied to 
 
-*@src: origin source str to do the copying 
+/**
 
-*@n: range of character to copy to str 
+ **_strncpy – Responsible for copying str file
 
-*Return: joints str 
+ *@dest: final destination str to be copied to
 
-*/ 
+ *@src: origin source str to do the copying
 
-char *_strncpy(char *dest, char *src, int n) 
+ *@n: range of character to copy to str
 
-{ 
+ *Return: joints str
 
-	int i, e; 
+ */
 
-	char *s = dest; 
+char *_strncpy(char *dest, char *src, int n)
 
-  
+{
 
-	i = 0; 
+	int i, e;
 
-	while (src[i] != '\0' && i < n - 1) 
+	char *s = dest;
 
-	{ 
 
-		dest[i] = src[i]; 
 
-		i++; 
+	i = 0;
 
-	} 
+	while (src[i] != '\0' && i < n - 1)
 
-	if (i < n) 
+	{
 
-	{ 
+		dest[i] = src[i];
 
-		e = i; 
+		i++;
 
-		while (e < n) 
+	}
 
-		{ 
+	if (i < n)
 
-			dest[e] = '\0'; 
+	{
 
-			e++; 
+		e = i;
 
-		} 
+		while (e < n)
 
-	} 
+		{
 
-	return (s); 
+			dest[e] = '\0';
 
-} 
+			e++;
 
-  
+		}
 
-  
+	}
 
-/** 
+	return (s);
 
-**_strchr - find charact in str 
+}
 
-*@s: str to use 
 
-*@c: charact to find 
 
-*Return: (s) the pointer to memory location s 
 
-*/ 
 
-char *_strchr(char *s, char c) 
+/**
 
-{ 
+ **_strchr - find charact in str
 
-	do { 
+ *@s: str to use
 
-		if (*s == c) 
+ *@c: charact to find
 
-			return (s); 
+ *Return: (s) the pointer to memory location s
 
-	} while (*s++ != '\0'); 
+ */
 
-  
+char *_strchr(char *s, char c)
 
-	return (NULL); 
+{
 
-} 
+	do {
+
+		if (*s == c)
+
+			return (s);
+
+	} while (*s++ != '\0');
+
+
+
+	return (NULL);
+
+}

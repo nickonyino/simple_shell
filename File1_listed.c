@@ -1,241 +1,241 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* print_list – the printing of linked list list_t 
+ * print_list – the printing of linked list list_t
 
-* @h:  the next node ptr 
+ * @h:  the next node ptr
 
-* 
+ *
 
-* Return: range of list size 
+ * Return: range of list size
 
-*/ 
+ */
 
-size_t print_list(const list_t *h) 
+size_t print_list(const list_t *h)
 
-{ 
+{
 
-	size_t y = 0; 
+	size_t y = 0;
 
-  
 
-	while (h) 
 
-	{ 
+	while (h)
 
-		_puts(convert_number(h->num, 10, 0)); 
+	{
 
-		_putchar(':'); 
+		_puts(convert_number(h->num, 10, 0));
 
-		_putchar(' '); 
+		_putchar(':');
 
-		_puts(h->str ? h->str : "(nil)"); 
+		_putchar(' ');
 
-		_puts("\n"); 
+		_puts(h->str ? h->str : "(nil)");
 
-		h = h->next; 
+		_puts("\n");
 
-		y++; 
+		h = h->next;
 
-	} 
+		y++;
 
-	return (y); 
+	}
 
-} 
+	return (y);
 
-  
+}
 
-/** 
 
-* list_len – ascertain linked list length 
 
-* @h: next node pointer 
+/**
 
-* 
+ * list_len – ascertain linked list length
 
-* Return:  range of size 
+ * @h: next node pointer
 
-*/ 
+ *
 
-size_t list_len(const list_t *h) 
+ * Return:  range of size
 
-{ 
+ */
 
-	size_t y = 0; 
+size_t list_len(const list_t *h)
 
-  
+{
 
-	while (h) 
+	size_t y = 0;
 
-	{ 
 
-		h = h->next; 
 
-		y++; 
+	while (h)
 
-	} 
+	{
 
-	return (y); 
+		h = h->next;
 
-} 
+		y++;
 
-  
+	}
 
-/** 
+	return (y);
 
-* list_to_strings – replace arr of str of  list arow pointer to str 
+}
 
-* @head: next node ptr  
 
-* 
 
-* Return: the arr of str 
+/**
 
-*/ 
+ * list_to_strings – replace arr of str of  list arow pointer to str
 
-char **list_to_strings(list_t *head) 
+ * @head: next node ptr
 
-{ 
+ *
 
-	list_t *node = head; 
+ * Return: the arr of str
 
-	size_t y = list_len(head), x; 
+ */
 
-	char **strs; 
+char **list_to_strings(list_t *head)
 
-	char *str; 
+{
 
-  
+	list_t *node = head;
 
-	if (!head || !y) 
+	size_t y = list_len(head), x;
 
-		return (NULL); 
+	char **strs;
 
-	strs = malloc(sizeof(char *) * (y + 1)); 
+	char *str;
 
-	if (!strs) 
 
-		return (NULL); 
 
-	for (y = 0; node; node = node->next, y++) 
+	if (!head || !y)
 
-	{ 
+		return (NULL);
 
-		str = malloc(_strlen(node->str) + 1); 
+	strs = malloc(sizeof(char *) * (y + 1));
 
-		if (!str) 
+	if (!strs)
 
-		{ 
+		return (NULL);
 
-			for (x = 0; x < y; x++) 
+	for (y = 0; node; node = node->next, y++)
 
-				free(strs[x]); 
+	{
 
-			free(strs); 
+		str = malloc(_strlen(node->str) + 1);
 
-			return (NULL); 
+		if (!str)
 
-		} 
+		{
 
-  
+			for (x = 0; x < y; x++)
 
-		str = _strcpy(str, node->str); 
+				free(strs[x]);
 
-		strs[y] = str; 
+			free(strs);
 
-	} 
+			return (NULL);
 
-	strs[y] = NULL; 
+		}
 
-	return (strs); 
 
-} 
 
-  
+		str = _strcpy(str, node->str);
 
- /** 
+		strs[y] = str;
 
-* get_node_index – find node indexed 
+	}
 
-* @head: the listed head ptr 
+	strs[y] = NULL;
 
-* @node: the node ptr 
+	return (strs);
 
-* 
+}
 
-* Return: -1 or node indexed 
 
-*/ 
 
-ssize_t get_node_index(list_t *head, list_t *node) 
+/**
 
-{ 
+ * get_node_index – find node indexed
 
-	size_t y = 0; 
+ * @head: the listed head ptr
 
-  
+ * @node: the node ptr
 
-	while (head) 
+ *
 
-	{ 
+ * Return: -1 or node indexed
 
-		if (head == node) 
+ */
 
-			return (y); 
+ssize_t get_node_index(list_t *head, list_t *node)
 
-		head = head->next; 
+{
 
-		y++; 
+	size_t y = 0;
 
-	} 
 
-	return (-1); 
 
-} 
+	while (head)
 
- 
+	{
 
-  
+		if (head == node)
 
-/** 
+			return (y);
 
-* node_starts_with - restores nodes prefix 
+		head = head->next;
 
-* @node: the listed head ptr  
+		y++;
 
-* @prefix: the equal string 
+	}
 
-* @c: the following char after prefix equals 
+	return (-1);
 
-* 
+}
 
-* Return: NULL or equal node 
 
-*/ 
 
-list_t *node_starts_with(list_t *node, char *prefix, char c) 
 
-{ 
 
-	char *p = NULL; 
+/**
 
-  
+ * node_starts_with - restores nodes prefix
 
-	while (node) 
+ * @node: the listed head ptr
 
-	{ 
+ * @prefix: the equal string
 
-		p = starts_with(node->str, prefix); 
+ * @c: the following char after prefix equals
 
-		if (p && ((c == -1) || (*p == c))) 
+ *
 
-			return (node); 
+ * Return: NULL or equal node
 
-		node = node->next; 
+ */
 
-	} 
+list_t *node_starts_with(list_t *node, char *prefix, char c)
 
-	return (NULL); 
+{
 
-} 
+	char *p = NULL;
+
+
+
+	while (node)
+
+	{
+
+		p = starts_with(node->str, prefix);
+
+		if (p && ((c == -1) || (*p == c)))
+
+			return (node);
+
+		node = node->next;
+
+	}
+
+	return (NULL);
+
+}

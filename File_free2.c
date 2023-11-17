@@ -1,121 +1,121 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* ffree – release part of str 
+ * ffree – release part of str
 
-* @pp: part of Str 
+ * @pp: part of Str
 
-*/ 
+ */
 
-void ffree(char **pp) 
+void ffree(char **pp)
 
-{ 
+{
 
-	char **a = pp; 
+	char **a = pp;
 
-  
 
-	if (!pp) 
 
-		return; 
+	if (!pp)
 
-	while (*pp) 
+		return;
 
-		free(*pp++); 
+	while (*pp)
 
-	free(a); 
+		free(*pp++);
 
-} 
+	free(a);
 
- 
+}
 
-/** 
 
-* _memset – load mem with const byte 
 
-* @s: the Pointer to memory location 
+/**
 
-* @b: the bytes to load*s with 
+ * _memset – load mem with const byte
 
-* @n: range of byte 
+ * @s: the Pointer to memory location
 
-* Return: the pointer mem location s 
+ * @b: the bytes to load*s with
 
-*/ 
+ * @n: range of byte
 
-char *_memset(char *s, char b, unsigned int n) 
+ * Return: the pointer mem location s
 
-{ 
+ */
 
-	unsigned int y; 
+char *_memset(char *s, char b, unsigned int n)
 
-  
+{
 
-	for (y = 0; y < n; y++) 
+	unsigned int y;
 
-		s[y] = b; 
 
-	return (s); 
 
-} 
+	for (y = 0; y < n; y++)
 
-  
+		s[y] = b;
 
-/** 
+	return (s);
 
-* _realloc – the realloc size of mem 
+}
 
-* @ptr: the pointer to former mem 
 
-* @old_size: the Byte range 
 
-* @new_size: the Byte of new mem range 
+/**
 
-* 
+ * _realloc – the realloc size of mem
 
-* Return: the ptr mem size block 
+ * @ptr: the pointer to former mem
 
-*/ 
+ * @old_size: the Byte range
 
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size) 
+ * @new_size: the Byte of new mem range
 
-{ 
+ *
 
-	char *p; 
+ * Return: the ptr mem size block
 
-  
+ */
 
-	if (!ptr) 
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
-		return (malloc(new_size)); 
+{
 
-	if (!new_size) 
+	char *p;
 
-		return (free(ptr), NULL); 
 
-	if (new_size == old_size) 
 
-		return (ptr); 
+	if (!ptr)
 
-  
+		return (malloc(new_size));
 
-	p = malloc(new_size); 
+	if (!new_size)
 
-	if (!p) 
+		return (free(ptr), NULL);
 
-		return (NULL); 
+	if (new_size == old_size)
 
-  
+		return (ptr);
 
-	old_size = old_size < new_size ? old_size : new_size; 
 
-	while (old_size--) 
 
-		p[old_size] = ((char *)ptr)[old_size]; 
+	p = malloc(new_size);
 
-	free(ptr); 
+	if (!p)
 
-	return (p); 
+		return (NULL);
 
-} 
+
+
+	old_size = old_size < new_size ? old_size : new_size;
+
+	while (old_size--)
+
+		p[old_size] = ((char *)ptr)[old_size];
+
+	free(ptr);
+
+	return (p);
+
+}

@@ -1,142 +1,142 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* _strcat - joins two str 
-* @dest: end buffer str 
-* @src: original buffer 
-* Return: the Ptr if success 
+ * _strcat - joins two str
+ * @dest: end buffer str
+ * @src: original buffer
+ * Return: the Ptr if success
 
-*/ 
+ */
 
-char *_strcat(char *dest, char *src) 
+char *_strcat(char *dest, char *src)
 
-{ 
+{
 
-	char *ret = dest; 
+	char *ret = dest;
 
-  
 
-	while (*dest) 
 
-		dest++; 
+	while (*dest)
 
-	while (*src) 
+		dest++;
 
-		*dest++ = *src++; 
+	while (*src)
 
-	*dest = *src; 
+		*dest++ = *src++;
 
-	return (ret); 
+	*dest = *src;
 
-} 
+	return (ret);
 
- 
+}
 
-/** 
 
-* _strlen – restore str length 
 
-* @s: to check str length 
+/**
 
-* 
+ * _strlen – restore str length
 
-* Return: len of int str success  
+ * @s: to check str length
 
-*/ 
+ *
 
-int _strlen(char *s) 
+ * Return: len of int str success
 
-{ 
+ */
 
-	int y = 0; 
+int _strlen(char *s)
 
-  
+{
 
-	if (!s) 
+	int y = 0;
 
-		return (0); 
 
-  
 
-	while (*s++) 
+	if (!s)
 
-		y++; 
+		return (0);
 
-	return (y); 
 
-} 
 
-  
+	while (*s++)
 
-/** 
+		y++;
 
-* _strcmp – corelate two str 
+	return (y);
 
-* @s1: beginning str 
+}
 
-* @s2: next str 
 
-* 
 
-* Return:   if s1 > s2 positve, if s1 == s2 zero , if s1 < s2 negative 
+/**
 
-*/ 
+ * _strcmp – corelate two str
 
-int _strcmp(char *s1, char *s2) 
+ * @s1: beginning str
 
-{ 
+ * @s2: next str
 
-	while (*s1 && *s2) 
+ *
 
-	{ 
+ * Return:   if s1 > s2 positve, if s1 == s2 zero , if s1 < s2 negative
 
-		if (*s1 != *s2) 
+ */
 
-			return (*s1 - *s2); 
+int _strcmp(char *s1, char *s2)
 
-		s1++; 
+{
 
-		s2++; 
+	while (*s1 && *s2)
 
-	} 
+	{
 
-	if (*s1 == *s2) 
+		if (*s1 != *s2)
 
-		return (0); 
+			return (*s1 - *s2);
 
-	else 
+		s1++;
 
-		return (*s1 < *s2 ? -1 : 1); 
+		s2++;
 
-} 
+	}
 
-  
+	if (*s1 == *s2)
 
-/** 
+		return (0);
 
-* starts_with – looks whether needle begins with haystack 
+	else
 
-* @haystack: str to look 
+		return (*s1 < *s2 ? -1 : 1);
 
-* @needle: the substr 
+}
 
-* 
 
-* Return: location of followed character  or NULL 
 
-*/ 
+/**
 
-char *starts_with(const char *haystack, const char *needle) 
+ * starts_with – looks whether needle begins with haystack
 
-{ 
+ * @haystack: str to look
 
-	while (*needle) 
+ * @needle: the substr
 
-		if (*needle++ != *haystack++) 
+ *
 
-			return (NULL); 
+ * Return: location of followed character  or NULL
 
-	return ((char *)haystack); 
+ */
 
-} 
+char *starts_with(const char *haystack, const char *needle)
+
+{
+
+	while (*needle)
+
+		if (*needle++ != *haystack++)
+
+			return (NULL);
+
+	return ((char *)haystack);
+
+}

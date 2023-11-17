@@ -1,283 +1,283 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* get_history_file - obtain  history file 
+ * get_history_file - obtain  history file
 
-* @info: Param Strct 
+ * @info: Param Strct
 
-* 
+ *
 
-* Return: string 
+ * Return: string
 
-*/ 
+ */
 
-  
 
-char *get_history_file(info_t *info) 
 
-{ 
+char *get_history_file(info_t *info)
 
-        char *buf, *dir; 
+{
 
-  
+	char *buf, *dir;
 
-        dir = _getenv(info, "HOME="); 
 
-        if (!dir) 
 
-                return (NULL); 
+	dir = _getenv(info, "HOME=");
 
-        buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2)); 
+	if (!dir)
 
-        if (!buf) 
+		return (NULL);
 
-                return (NULL); 
+	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
 
-        buf[0] = 0; 
+	if (!buf)
 
-        _strcpy(buf, dir); 
+		return (NULL);
 
-        _strcat(buf, "/"); 
+	buf[0] = 0;
 
-        _strcat(buf, HIST_FILE); 
+	_strcpy(buf, dir);
 
-        return (buf); 
+	_strcat(buf, "/");
 
-} 
+	_strcat(buf, HIST_FILE);
 
-  
+	return (buf);
 
-/** 
+}
 
-* write_history -  attach to an existing file 
 
-* @info: Param Strut 
 
-* 
+/**
 
-* Return:success 1, or -1 
+ * write_history -  attach to an existing file
 
-*/ 
+ * @info: Param Strut
 
-int write_history(info_t *info) 
+ *
 
-{ 
+ * Return:success 1, or -1
 
-        ssize_t fd; 
+ */
 
-        char *filename = get_history_file(info); 
+int write_history(info_t *info)
 
-        list_t *node = NULL; 
+{
 
-  
+	ssize_t fd;
 
-        if (!filename) 
+	char *filename = get_history_file(info);
 
-                return (-1); 
+	list_t *node = NULL;
 
-  
 
-        fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644); 
 
-        free(filename); 
+	if (!filename)
 
-        if (fd == -1) 
+		return (-1);
 
-                return (-1); 
 
-        for (node = info->history; node; node = node->next) 
 
-        { 
+	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 
-                _putsfd(node->str, fd); 
+	free(filename);
 
-                _putfd('\n', fd); 
+	if (fd == -1)
 
-        } 
+		return (-1);
 
-        _putfd(BUF_FLUSH, fd); 
+	for (node = info->history; node; node = node->next)
 
-        close(fd); 
+	{
 
-        return (1); 
+		_putsfd(node->str, fd);
 
-} 
+		_putfd('\n', fd);
 
-  
+	}
 
-/** 
+	_putfd(BUF_FLUSH, fd);
 
-* read_history - Reading hist  file 
+	close(fd);
 
-* @info: Param Strct 
+	return (1);
 
-* 
+}
 
-* Return: on success  histcount, otherwise 0 
 
-*/ 
 
-int read_history(info_t *info) 
+/**
 
-{ 
+ * read_history - Reading hist  file
 
-        int y, last = 0, linecount = 0; 
+ * @info: Param Strct
 
-        ssize_t fd, rdlen, fsize = 0; 
+ *
 
-        struct stat st; 
+ * Return: on success  histcount, otherwise 0
 
-        char *buf = NULL, *filename = get_history_file(info); 
+ */
 
-  
+int read_history(info_t *info)
 
-        if (!filename) 
+{
 
-                return (0); 
+	int y, last = 0, linecount = 0;
 
-  
+	ssize_t fd, rdlen, fsize = 0;
 
-        fd = open(filename, O_RDONLY); 
+	struct stat st;
 
-        free(filename); 
+	char *buf = NULL, *filename = get_history_file(info);
 
-        if (fd == -1) 
 
-                return (0); 
 
-        if (!fstat(fd, &st)) 
+	if (!filename)
 
-                fsize = st.st_size; 
+		return (0);
 
-        if (fsize < 2) 
 
-                return (0); 
 
-        buf = malloc(sizeof(char) * (fsize + 1)); 
+	fd = open(filename, O_RDONLY);
 
-        if (!buf) 
+	free(filename);
 
-                return (0); 
+	if (fd == -1)
 
-        rdlen = read(fd, buf, fsize); 
+		return (0);
 
-        buf[fsize] = 0; 
+	if (!fstat(fd, &st))
 
-        if (rdlen <= 0) 
+		fsize = st.st_size;
 
-                return (free(buf), 0); 
+	if (fsize < 2)
 
-        close(fd); 
+		return (0);
 
-        for (y = 0; y < fsize; y++) 
+	buf = malloc(sizeof(char) * (fsize + 1));
 
-                if (buf[y] == '\n') 
+	if (!buf)
 
-                { 
+		return (0);
 
-                        buf[y] = 0; 
+	rdlen = read(fd, buf, fsize);
 
-                        build_history_list(info, buf + last, linecount++); 
+	buf[fsize] = 0;
 
-                        last = y + 1; 
+	if (rdlen <= 0)
 
-                } 
+		return (free(buf), 0);
 
-        if (last != y) 
+	close(fd);
 
-                build_history_list(info, buf + last, linecount++); 
+	for (y = 0; y < fsize; y++)
 
-        free(buf); 
+		if (buf[y] == '\n')
 
-        info->histcount = linecount; 
+		{
 
-        while (info->histcount-- >= HIST_MAX) 
+			buf[y] = 0;
 
-                delete_node_at_index(&(info->history), 0); 
+			build_history_list(info, buf + last, linecount++);
 
-        renumber_history(info); 
+			last = y + 1;
 
-        return (info->histcount); 
+		}
 
-} 
+	if (last != y)
 
-  
+		build_history_list(info, buf + last, linecount++);
 
-/** 
+	free(buf);
 
-* build_history_list - takes entry to  history linked list 
+	info->histcount = linecount;
 
-* @info: Strct holding potential arg. Used to maintain 
+	while (info->histcount-- >= HIST_MAX)
 
-* @buf: Buffer 
+		delete_node_at_index(&(info->history), 0);
 
-* @linecount:  Hist count 
+	renumber_history(info);
 
-* 
+	return (info->histcount);
 
-* Return:  Success Always 0 
+}
 
-*/ 
 
-int build_history_list(info_t *info, char *buf, int linecount) 
 
-{ 
+/**
 
-        list_t *node = NULL; 
+ * build_history_list - takes entry to  history linked list
 
-  
+ * @info: Strct holding potential arg. Used to maintain
 
-        if (info->history) 
+ * @buf: Buffer
 
-                node = info->history; 
+ * @linecount:  Hist count
 
-        add_node_end(&node, buf, linecount); 
+ *
 
-  
+ * Return:  Success Always 0
 
-        if (!info->history) 
+ */
 
-                info->history = node; 
+int build_history_list(info_t *info, char *buf, int linecount)
 
-        return (0); 
+{
 
-} 
+	list_t *node = NULL;
 
-  
 
-/** 
 
-* renumber_history - renumber histo  linked list 
+	if (info->history)
 
-* @info: Strut holding arg 
+		node = info->history;
 
-* 
+	add_node_end(&node, buf, linecount);
 
-* Return: New histo count 
 
-*/ 
 
-int renumber_history(info_t *info) 
+	if (!info->history)
 
-{ 
+		info->history = node;
 
-        list_t *node = info->history; 
+	return (0);
 
-        int y = 0; 
+}
 
-  
 
-        while (node) 
 
-        { 
+/**
 
-                node->num = y++; 
+ * renumber_history - renumber histo  linked list
 
-                node = node->next; 
+ * @info: Strut holding arg
 
-        } 
+ *
 
-        return (info->histcount = y); 
+ * Return: New histo count
 
-} 
+ */
+
+int renumber_history(info_t *info)
+
+{
+
+	list_t *node = info->history;
+
+	int y = 0;
+
+
+
+	while (node)
+
+	{
+
+		node->num = y++;
+
+		node = node->next;
+
+	}
+
+	return (info->histcount = y);
+
+}

@@ -1,85 +1,85 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
- /** 
+/**
 
-* main - entrance point 
+ * main - entrance point
 
-* @ac: arg cnt 
+ * @ac: arg cnt
 
-* @av: arg vec 
+ * @av: arg vec
 
-* 
+ *
 
-* return: 0 if condition success, 1 if error 
+ * return: 0 if condition success, 1 if error
 
-*/ 
+ */
 
-int main(int ac, char **av) 
+int main(int ac, char **av)
 
-{ 
+{
 
-	info_t info[] = { INFO_INIT }; 
+	info_t info[] = { INFO_INIT };
 
-	int fd = 2; 
+	int fd = 2;
 
-  
 
-	asm ("mov %1, %0\n\t" 
 
-			"add $3, %0" 
+	asm ("mov %1, %0\n\t"
 
-			: "=r" (fd) 
+			"add $3, %0"
 
-			: "r" (fd)); 
+			: "=r" (fd)
 
-  
+			: "r" (fd));
 
-	if (ac == 2) 
 
-	{ 
 
-		fd = open(av[1], O_RDONLY); 
+	if (ac == 2)
 
-		if (fd == -1) 
+	{
 
-		{ 
+		fd = open(av[1], O_RDONLY);
 
-			if (errno == EACCES) 
+		if (fd == -1)
 
-				exit(126); 
+		{
 
-			if (errno == ENOENT) 
+			if (errno == EACCES)
 
-			{ 
+				exit(126);
 
-				_eputs(av[0]); 
+			if (errno == ENOENT)
 
-				_eputs(": 0: unable to open file "); 
+			{
 
-				_eputs(av[1]); 
+				_eputs(av[0]);
 
-				_eputchar('\n'); 
+				_eputs(": 0: unable to open file ");
 
-				_eputchar(BUF_FLUSH); 
+				_eputs(av[1]);
 
-				exit(127); 
+				_eputchar('\n');
 
-			} 
+				_eputchar(BUF_FLUSH);
 
-			return (EXIT_FAILURE); 
+				exit(127);
 
-		} 
+			}
 
-		info->readfd = fd; 
+			return (EXIT_FAILURE);
 
-	} 
+		}
 
-	populate_env_list(info); 
+		info->readfd = fd;
 
-	read_history(info); 
+	}
 
-	hsh(info, av); 
+	populate_env_list(info);
 
-	return (EXIT_SUCCESS); 
+	read_history(info);
 
-} 
+	hsh(info, av);
+
+	return (EXIT_SUCCESS);
+
+}

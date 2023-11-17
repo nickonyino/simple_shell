@@ -1,12 +1,12 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/**  
+/**
 
-* _mycd - changes current dir 
-* @info: Struct that holds  args for maintaining 
-* constant funct prototype.
-* Return:  0 if condition Success
-*/
+ * _mycd - changes current dir
+ * @info: Struct that holds  args for maintaining
+ * constant funct prototype.
+ * Return:  0 if condition Success
+ */
 
 int _mycd(info_t *info)
 {
@@ -34,8 +34,8 @@ int _mycd(info_t *info)
 		}
 		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
 
-chdir_ret = /* TODO: what is this? */
-	chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+		chdir_ret = /* TODO: what is this? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
@@ -52,21 +52,21 @@ chdir_ret = /* TODO: what is this? */
 	return (0);
 }
 
-/** 
+/**
 
-* _myexit – leaves the shell  
+ * _myexit – leaves the shell
 
-* @info: Struct that holds  args for maintaining 
+ * @info: Struct that holds  args for maintaining
 
-* constant funct prototype. 
+ * constant funct prototype.
 
-* return: leaves with given exit conditions 
+ * return: leaves with given exit conditions
 
-* (0) if info.argv[0] != "exit" 
+ * (0) if info.argv[0] != "exit"
 
-*/ 
+ */
 
-int _myexit(info_t *info) 
+int _myexit(info_t *info)
 
 {
 	int exitcheck;
@@ -88,19 +88,19 @@ int _myexit(info_t *info)
 	return (-2);
 }
 
-/** 
+/**
 
-* _myhelp - changes current dir  
+ * _myhelp - changes current dir
 
-* @info: Struct that holds  args for maintaining 
+ * @info: Struct that holds  args for maintaining
 
-* constant funct prototype. 
+ * constant funct prototype.
 
-* Return:  0 if condition Success 
+ * Return:  0 if condition Success
 
-*/ 
+ */
 
-int _myhelp(info_t *info) 
+int _myhelp(info_t *info)
 
 {
 	char **arg_array;

@@ -1,167 +1,167 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* _puts - writes inputted str 
+ * _puts - writes inputted str
 
-* @str: written str 
+ * @str: written str
 
-* 
+ *
 
-* Return: NULL 
+ * Return: NULL
 
-*/ 
+ */
 
-void _puts(char *str) 
+void _puts(char *str)
 
-{ 
+{
 
-	int y= 0; 
+	int y= 0;
 
-  
 
-	if (!str) 
 
-		return; 
+	if (!str)
 
-	while (str[y] != '\0') 
+		return;
 
-	{ 
+	while (str[y] != '\0')
 
-		_putchar(str[y]); 
+	{
 
-		y++; 
+		_putchar(str[y]);
 
-	} 
+		y++;
 
-} 
+	}
 
-/** 
+}
 
-* _strcpy - replicate str 
+/**
 
-* @dest: end 
+ * _strcpy - replicate str
 
-* @src:  origin 
+ * @dest: end
 
-* 
+ * @src:  origin
 
-* Return: the end ptr 
+ *
 
-*/ 
+ * Return: the end ptr
 
-char *_strcpy(char *dest, char *src) 
+ */
 
-{ 
+char *_strcpy(char *dest, char *src)
 
-	int y = 0; 
+{
 
-  
+	int y = 0;
 
-	if (dest == src || src == 0) 
 
-		return (dest); 
 
-	while (src[y]) 
+	if (dest == src || src == 0)
 
-	{ 
+		return (dest);
 
-		dest[y] = src[y]; 
+	while (src[y])
 
-		y++; 
+	{
 
-	} 
+		dest[y] = src[y];
 
-	dest[y] = 0; 
+		y++;
 
-	return (dest); 
+	}
 
-}  
+	dest[y] = 0;
 
-  
+	return (dest);
 
-/** 
+}
 
-* _putchar - compose character c stdout 
 
-* @c:  compose char 
 
-* 
+/**
 
-* Return: 1 if condition success, 
+ * _putchar - compose character c stdout
 
-* -1 if condition fails, and failnumber set correctly. 
+ * @c:  compose char
 
-*/ 
+ *
 
-int _putchar(char c) 
+ * Return: 1 if condition success,
 
-{ 
+ * -1 if condition fails, and failnumber set correctly.
 
-	static int y; 
+ */
 
-	static char buf[WRITE_BUF_SIZE]; 
+int _putchar(char c)
 
-  
+{
 
-	if (c == BUF_FLUSH || y >= WRITE_BUF_SIZE) 
+	static int y;
 
-	{ 
+	static char buf[WRITE_BUF_SIZE];
 
-		write(1, buf, y); 
 
-		y = 0; 
 
-	} 
+	if (c == BUF_FLUSH || y >= WRITE_BUF_SIZE)
 
-	if (c != BUF_FLUSH) 
+	{
 
-		buf[y++] = c; 
+		write(1, buf, y);
 
-	return (1); 
+		y = 0;
 
-} 
+	}
 
-/** 
+	if (c != BUF_FLUSH)
 
-* _strdup - copies str 
+		buf[y++] = c;
 
-* @str: str for copying 
+	return (1);
 
-* 
+}
 
-* Return: copied str ptr 
+/**
 
-*/ 
+ * _strdup - copies str
 
-char *_strdup(const char *str) 
+ * @str: str for copying
 
-{ 
+ *
 
-	int length = 0; 
+ * Return: copied str ptr
 
-	char *ret; 
+ */
 
-  
+char *_strdup(const char *str)
 
-	if (str == NULL) 
+{
 
-		return (NULL); 
+	int length = 0;
 
-	while (*str++) 
+	char *ret;
 
-		length++; 
 
-	ret = malloc(sizeof(char) * (length + 1)); 
 
-	if (!ret) 
+	if (str == NULL)
 
-		return (NULL); 
+		return (NULL);
 
-	for (length++; length--;) 
+	while (*str++)
 
-		ret[length] = *--str; 
+		length++;
 
-	return (ret); 
+	ret = malloc(sizeof(char) * (length + 1));
 
-} 
+	if (!ret)
+
+		return (NULL);
+
+	for (length++; length--;)
+
+		ret[length] = *--str;
+
+	return (ret);
+
+}

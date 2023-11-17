@@ -1,337 +1,337 @@
-#include "nickdun.h" 
+#include "nickdun.h"
 
-/** 
+/**
 
-* input_buf – this buff chaining cmds 
+ * input_buf – this buff chaining cmds
 
-* @info: args structure 
+ * @info: args structure
 
-* @buf:  buf location 
+ * @buf:  buf location
 
-* @len:  this is buffer location 
+ * @len:  this is buffer location
 
-* 
+ *
 
-* Return: bytes read 
+ * Return: bytes read
 
-*/ 
+ */
 
-ssize_t input_buf(info_t *info, char **buf, size_t *len) 
+ssize_t input_buf(info_t *info, char **buf, size_t *len)
 
-{ 
+{
 
-	ssize_t r = 0; 
+	ssize_t r = 0;
 
-	size_t len_p = 0; 
+	size_t len_p = 0;
 
-  
 
-	if (!*len) /* none left in buffer, replenish it */ 
 
-	{ 
+	if (!*len) /* none left in buffer, replenish it */
 
-		/*bfree((void **)info->cmd_buf);*/ 
+	{
 
-		free(*buf); 
+		/*bfree((void **)info->cmd_buf);*/
 
-		*buf = NULL; 
+		free(*buf);
 
-		signal(SIGINT, sigintHandler); 
+		*buf = NULL;
 
-#if USE_GETLINE 
+		signal(SIGINT, sigintHandler);
 
-		r = getline(buf, &len_p, stdin); 
+#if USE_GETLINE
 
-#else 
+		r = getline(buf, &len_p, stdin);
 
-		r = _getline(info, buf, &len_p); 
+#else
 
-#endif 
+		r = _getline(info, buf, &len_p);
 
-		if (r > 0) 
+#endif
 
-		{ 
+		if (r > 0)
 
-			if ((*buf)[r - 1] == '\n') 
+		{
 
-			{ 
+			if ((*buf)[r - 1] == '\n')
 
-				(*buf)[r - 1] = '\0'; /* avoid trailsof  new-line */ 
+			{
 
-				r--; 
+				(*buf)[r - 1] = '\0'; /* avoid trailsof  new-line */
 
-			} 
+				r--;
 
-			info->linecount_flag = 1; 
+			}
 
-			remove_comments(*buf); 
+			info->linecount_flag = 1;
 
-			build_history_list(info, *buf, info->histcount++); 
+			remove_comments(*buf);
 
-			/* if (_strchr(*buf, ';')) if is  a cmd chain? */ 
+			build_history_list(info, *buf, info->histcount++);
 
-			{ 
+			/* if (_strchr(*buf, ';')) if is  a cmd chain? */
 
-				*len = r; 
+			{
 
-				info->cmd_buf = buf; 
+				*len = r;
 
-			} 
+				info->cmd_buf = buf;
 
-		} 
+			}
 
-	} 
+		}
 
-	return (r); 
+	}
 
-} 
+	return (r);
 
-  
+}
 
-/** 
 
-* get_input – this line-get subtract newline 
 
-* @info: args  datatype struct 
+/**
 
-* 
+ * get_input – this line-get subtract newline
 
-* Return:  document bytes 
+ * @info: args  datatype struct
 
-*/ 
+ *
 
-ssize_t get_input(info_t *info) 
+ * Return:  document bytes
 
-{ 
+ */
 
-	static char *buf; /* the ';' cmd buff chaining */ 
+ssize_t get_input(info_t *info)
 
-	static size_t i, j, len; 
+{
 
-	ssize_t r = 0; 
+	static char *buf; /* the ';' cmd buff chaining */
 
-	char **buf_p = &(info->arg), *p; 
+	static size_t i, j, len;
 
-  
+	ssize_t r = 0;
 
-	_putchar(BUF_FLUSH); 
+	char **buf_p = &(info->arg), *p;
 
-	r = input_buf(info, &buf, &len); 
 
-	if (r == -1) /* EOF */ 
 
-		return (-1); 
+	_putchar(BUF_FLUSH);
 
-	if (len) /* is there  cmd left in buffer chain  */ 
+	r = input_buf(info, &buf, &len);
 
-	{ 
+	if (r == -1) /* EOF */
 
-		j = i; /* init a repetation to now buffer range */ 
+		return (-1);
 
-		p = buf + i; /* restore get pointer */ 
+	if (len) /* is there  cmd left in buffer chain  */
 
-  
+	{
 
-		check_chain(info, buf, &j, i, len); 
+		j = i; /* init a repetation to now buffer range */
 
-		while (j < len) /* repeat to colon -semi or destination */ 
+		p = buf + i; /* restore get pointer */
 
-		{ 
 
-			if (is_chain(info, buf, &j)) 
 
-				break; 
+		check_chain(info, buf, &j, i, len);
 
-			j++; 
+		while (j < len) /* repeat to colon -semi or destination */
 
-		} 
+		{
 
-  
+			if (is_chain(info, buf, &j))
 
-		i = j + 1; /* add the null passing ';'' */ 
+				break;
 
-		if (i >= len) /*  desti of buf? */ 
+			j++;
 
-		{ 
+		}
 
-			i = len = 0; /* default length and position  */ 
 
-			info->cmd_buf_type = CMD_NORM; 
 
-		} 
+		i = j + 1; /* add the null passing ';'' */
 
-  
+		if (i >= len) /*  desti of buf? */
 
-		*buf_p = p; /* retrace ponter curent cmd position */ 
+		{
 
-		return (_strlen(p)); /* retrace range  current cmd */ 
+			i = len = 0; /* default length and position  */
 
-	} 
+			info->cmd_buf_type = CMD_NORM;
 
-  
+		}
 
-	*buf_p = buf; /* if not chained, retrace buf to_getline() */ 
 
-	return (r); /* retrace range of buff from _getline() */ 
 
-} 
+		*buf_p = p; /* retrace ponter curent cmd position */
 
-  
+		return (_strlen(p)); /* retrace range  current cmd */
 
-/** 
+	}
 
-* read_buf – buf read 
 
-* @info: arg struct 
 
-* @buf: the buf 
+	*buf_p = buf; /* if not chained, retrace buf to_getline() */
 
-* @i: size 
+	return (r); /* retrace range of buff from _getline() */
 
-* 
+}
 
-* Return: r 
 
-*/ 
 
-ssize_t read_buf(info_t *info, char *buf, size_t *i) 
+/**
 
-{ 
+ * read_buf – buf read
 
-	ssize_t r = 0; 
+ * @info: arg struct
 
-  
+ * @buf: the buf
 
-	if (*i) 
+ * @i: size
 
-		return (0); 
+ *
 
-	r = read(info->readfd, buf, READ_BUF_SIZE); 
+ * Return: r
 
-	if (r >= 0) 
+ */
 
-		*i = r; 
+ssize_t read_buf(info_t *info, char *buf, size_t *i)
 
-	return (r); 
+{
 
-} 
+	ssize_t r = 0;
 
-  
 
-/** 
 
-* _getline – call line input from stdin 
+	if (*i)
 
-* @info: args datatype struct 
+		return (0);
 
-* @ptr: location pointer to buf, allocate or nul 
+	r = read(info->readfd, buf, READ_BUF_SIZE);
 
-* @length: range of allocated ptr buf if not NULL 
+	if (r >= 0)
 
-* 
+		*i = r;
 
-* Return: s 
+	return (r);
 
-*/ 
+}
 
-int _getline(info_t *info, char **ptr, size_t *length) 
 
-{ 
 
-	static char buf[READ_BUF_SIZE]; 
+/**
 
-	static size_t i, len; 
+ * _getline – call line input from stdin
 
-	size_t k; 
+ * @info: args datatype struct
 
-	ssize_t r = 0, s = 0; 
+ * @ptr: location pointer to buf, allocate or nul
 
-	char *p = NULL, *new_p = NULL, *c; 
+ * @length: range of allocated ptr buf if not NULL
 
-  
+ *
 
-	p = *ptr; 
+ * Return: s
 
-	if (p && length) 
+ */
 
-		s = *length; 
+int _getline(info_t *info, char **ptr, size_t *length)
 
-	if (i == len) 
+{
 
-		i = len = 0; 
+	static char buf[READ_BUF_SIZE];
 
-  
+	static size_t i, len;
 
-	r = read_buf(info, buf, &len); 
+	size_t k;
 
-	if (r == -1 || (r == 0 && len == 0)) 
+	ssize_t r = 0, s = 0;
 
-		return (-1); 
+	char *p = NULL, *new_p = NULL, *c;
 
-  
 
-	c = _strchr(buf + i, '\n'); 
 
-	k = c ? 1 + (unsigned int)(c - buf) : len; 
+	p = *ptr;
 
-	new_p = _realloc(p, s, s ? s + k : k + 1); 
+	if (p && length)
 
-	if (!new_p) /* MALLOC FAILURE! */ 
+		s = *length;
 
-		return (p ? free(p), -1 : -1); 
+	if (i == len)
 
-  
+		i = len = 0;
 
-	if (s) 
 
-		_strncat(new_p, buf + i, k - i); 
 
-	else 
+	r = read_buf(info, buf, &len);
 
-		_strncpy(new_p, buf + i, k - i + 1); 
+	if (r == -1 || (r == 0 && len == 0))
 
-  
+		return (-1);
 
-	s += k - i; 
 
-	i = k; 
 
-	p = new_p; 
+	c = _strchr(buf + i, '\n');
 
-  
+	k = c ? 1 + (unsigned int)(c - buf) : len;
 
-	if (length) 
+	new_p = _realloc(p, s, s ? s + k : k + 1);
 
-		*length = s; 
+	if (!new_p) /* MALLOC FAILURE! */
 
-	*ptr = p; 
+		return (p ? free(p), -1 : -1);
 
-	return (s); 
 
-} 
 
-  
+	if (s)
 
-/** 
+		_strncat(new_p, buf + i, k - i);
 
-* sigintHandler – disable the control 
+	else
 
-* @sig_num: the number signalling 
+		_strncpy(new_p, buf + i, k - i + 1);
 
-* 
 
-* Return: void 
 
-*/ 
+	s += k - i;
 
-void sigintHandler(__attribute__((unused))int sig_num) 
+	i = k;
 
-{ 
+	p = new_p;
 
-	_puts("\n"); 
 
-	_puts("$ "); 
 
-	_putchar(BUF_FLUSH); 
+	if (length)
 
-} 
+		*length = s;
+
+	*ptr = p;
+
+	return (s);
+
+}
+
+
+
+/**
+
+ * sigintHandler – disable the control
+
+ * @sig_num: the number signalling
+
+ *
+
+ * Return: void
+
+ */
+
+void sigintHandler(__attribute__((unused))int sig_num)
+
+{
+
+	_puts("\n");
+
+	_puts("$ ");
+
+	_putchar(BUF_FLUSH);
+
+}
